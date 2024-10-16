@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Игровой портал</title>
-     <style>
+    <style>
         @font-face {
             font-family: 'Intro';
             src: url('intro.otf') format('opentype');
         }
+
         body {
-            background: #000;
-            background-size: 600% 600%;
-            animation: Gradient 16s ease infinite;
+            background: url('fon.png') no-repeat center center fixed;
+            background-size: cover;
             color: #fff;
             font-family: 'Intro', Arial, sans-serif;
             margin: 0;
@@ -27,11 +27,7 @@
             -webkit-touch-callout: none;
             scroll-behavior: smooth;
         }
-        @keyframes Gradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+
         header {
             position: fixed;
             top: 0;
@@ -46,11 +42,32 @@
             box-sizing: border-box;
             font-size: 24px;
         }
+
         header img {
             height: 30px;
             width: 30px;
             margin-right: 10px;
             border-radius: 50%;
+        }
+
+        .language-selection {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .language-option {
+            margin: 0 10px;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            transition: transform 0.2s;
+        }
+
+        .language-option:hover {
+            transform: scale(1.1);
         }
         .tab {
             position: fixed;
@@ -584,36 +601,70 @@
         .close-button-mini:hover {
             color: #f00; /* Красный цвет при наведении */
         }
+    .telegram-button {
+    display: flex;
+    justify-content: center; /* Центрирование кнопки по горизонтали */
+    align-items: center;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 12px 24px;
+    width: 300px;
+    border-radius: 25px;
+    background: linear-gradient(145deg, #3a8ccf 0%, #00397a 100%);
+    box-shadow: 0 6px #082d53, 0 -6px #3a8ccf inset;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    outline: none;
+    font-family: 'Intro', Arial, sans-serif;
+    margin: 20px auto; /* Отступы сверху и снизу и центрирование по горизонтали */
+}
+
+.telegram-button:hover {
+    background: linear-gradient(145deg, #00397a 0%, #3a8ccf 100%);
+    box-shadow: 0 8px #082d53, 0 -6px #3a8ccf inset;
+    transform: translateY(-3px);
+}
+
+.telegram-button:active {
+    box-shadow: 0 3px #082d53, 0 -3px #3a8ccf inset;
+    transform: translateY(2px);
+}
+
+
+
     </style>
 </head>
 <body>
     <header>
-        <span>Mentor_Casino</span>
+
+        <span>Mentor_casino</span>
     </header>
-    <div id="About" class="tabcontent">
-        <img id="aboutGif" src="1.gif" alt="Описание GIF" class="about-gif">
-        <div class="about-text">
-            <h2>EntyLudik</h2>
-            <span class="typing-text"></span>
-            <button onclick="window.location.href='https://t.me/EntyLudik';" class="about-button">Перейти в Телеграм</button>
-        </div>
-    </div>
+
+<div class="language-selection">
+    <img src="en.png" alt="English" class="language-option" onclick="changeLanguage('en')">
+    <img src="ru.png" alt="Русский" class="language-option" onclick="changeLanguage('ru')">
+    <img src="in.png" alt="हिंदी" class="language-option" onclick="changeLanguage('hi')">
+</div>
+
+
 <div id="Contact" class="tabcontent">
     <div class="image-container">
-        <h2 class="title">GAME PICKER</h2>
+        <h2 class="title" id="game-picker-title">GAME PICKER</h2>
         <img src="secret.png" alt="Secret Image">
     </div>
-    <p id="device-output" class="device-info">Устройство не определено</p>
-    <button onclick="detectDevice()" class="detect-button">Определить устройство</button>
-    <button onclick="startGame()" class="start-button">Начать</button>
+    <p id="device-output" class="device-info">Device not detected</p>
+    <button onclick="detectDevice()" class="detect-button" id="detect-button">Detect device</button>
+    <button onclick="startGame()" class="start-button" id="start-button">Start</button>
+
     <div id="modal" class="modal">
         <div class="modal-content">
             <button class="close-button" onclick="closeModal()">&times;</button>
-            <h2 style="text-align: center;">Инструкция</h2>
+            <h2 style="text-align: center;">Instruction</h2>
             <div class="carousel">
                 <div class="slides" style="width: 200%; transition: transform 0.5s ease;">
-                    <div class="slide" style="width: 50%; float: left;"><img src="inst1.png" alt="Инструкция 1"></div>
-                    <div class="slide" style="width: 50%; float: left;"><img src="inst2.png" alt="Инструкция 2"></div>
+                    <div class="slide" style="width: 50%; float: left;"><img src="inst1.png" alt="Instruction 1"></div>
+                    <div class="slide" style="width: 50%; float: left;"><img src="inst2.png" alt="Instruction 2"></div>
                 </div>
                 <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
                 <a class="next" onclick="plusSlides(1)">&#10095;</a>
@@ -624,67 +675,56 @@
             </div>
         </div>
     </div>
-        <div id="miniModal" class="modal-mini">
+    
+    <div id="miniModal" class="modal-mini">
         <div class="modal-content-mini">
             <button class="close-button-mini" onclick="closeMiniModal()">&times;</button>
         </div>
     </div>
 </div>
+
 <div id="Games" class="tabcontent active" style="display: flex;">
     <div class="row">
         <div class="game">
             <img src="1.png" alt="Mines Preview">
             <div class="game-info">
-                <h3>Mines</h3>
-                <button onclick="openGame(&#39;mines&#39;)">Открыть</button>
+                <h3 id="game1-title">Mines</h3>
+                <button id="game1-button" onclick="openGame('mines')">Open</button>
             </div>
         </div>
         <div class="game">
-            <img src="4.png" alt="Royal Mines Preview">
+            <img src="4.png" alt="Bombucks Preview">
             <div class="game-info">
-                <h3>Bombucks</h3>
-                <button onclick="openGame(&#39;royalMines&#39;)">Открыть</button>
+                <h3 id="game2-title">Bombucks</h3>
+                <button id="game2-button" onclick="openGame('bomBucks')">Open</button>
             </div>
         </div>
         <div class="game">
-            <img src="3.png" alt="BrawlPirates Preview">
+            <img src="3.png" alt="Brawl Pirates Preview">
             <div class="game-info">
-                <h3>Brawl Pirates</h3>
-                <button onclick="openGame(&#39;brawlPirates&#39;)">Открыть</button>
+                <h3 id="game3-title">Brawl Pirates</h3>
+                <button id="game3-button" onclick="openGame('brawlPirates')">Open</button>
             </div>
         </div>
-        <div class="row center-row">
-            <div class="game">
-                <img src="2.png" alt="New Game Preview">
-                <div class="game-info">
-                    <h3>Royal Mines</h3>
-                    <button onclick="openGame(&#39;bomBucks&#39;)">Открыть</button>
-                </div>
-            </div>
-        </div>
-        <div class="row center-row">
-            <div class="game">
-                <img src="penafon.png" alt="New Game Preview">
-                <div class="game-info">
-                    <h3>Penalty Shoot</h3>
-                    <button onclick="openGame(&#39;penalty&#39;)">Открыть</button>
-                </div>
-            </div>
-        </div>
-        <div class="game secret-game">
-            <img class="secretimg" src="secret.png" alt="???">
+        <div class="game">
+            <img src="2.png" alt="Royal Mines Preview">
             <div class="game-info">
-                <h3>SOON...</h3>
+                <h3 id="game4-title">Royal Mines</h3>
+                <button id="game4-button" onclick="openGame('royalMines')">Open</button>
+            </div>
+        </div>
+        <div class="game">
+            <img src="penafon.png" alt="New Game Preview">
+            <div class="game-info">
+                <h3 id="game7-title">Penalty Shoot</h3>
+                <button id="game7-button" onclick="openGame('penalty')">Open</button>
             </div>
         </div>
     </div>
 </div>
 
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="tab">
+<div class="tab">
+
     <button class="tablinks games-icon" data-tab="Games" onclick="openTab(event, 'Games', this)">
         <img src="game.png" alt="Игры">
     </button>
@@ -692,17 +732,198 @@
         <img src="money.png" alt="Контакты">
     </button>
 </div>
-    <canvas id="particleCanvas"></canvas>
-    <audio id="aboutAudio" src="gif.mp3"></audio>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            let gamesButton = document.querySelector('.tablinks.games-icon');
-            openTab(new Event('click'), 'Games', gamesButton);
-            showSlides(slideIndex);
-        });
 
-        function showSlides(n) {
+<canvas id="particleCanvas"></canvas>
+<audio id="aboutAudio" src="gif.mp3"></audio>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let gamesButton = document.querySelector('.tablinks.games-icon');
+        openTab(new Event('click'), 'Games', gamesButton);
+        showSlides(slideIndex);
+    });
+
+
+    const translations = {
+        en: {
+            gamePickerTitle: "GAME PICKER",
+            detectButton: "Detect device",
+            startButton: "Start",
+            game1Title: "Mines",
+            game1Button: "Open",
+            game2Title: "Bombucks",
+            game2Button: "Open",
+            game3Title: "Brawl Pirates",
+            game3Button: "Open",
+            game4Title: "Royal Mines",
+            game4Button: "Open",
+            game7Title: "Penalty Shoot",
+            game7Button: "Open",
+            telegramButton: "Go to telegram"
+        },
+        ru: {
+            gamePickerTitle: "ВЫБОР ИГР",
+            detectButton: "Определить устройство",
+            startButton: "Начать",
+            game1Title: "Mines",
+            game1Button: "Открыть",
+            game2Title: "Bombucks",
+            game2Button: "Открыть",
+            game3Title: "Brawl Pirates",
+            game3Button: "Открыть",
+            game4Title: "Royal Mines",
+            game4Button: "Открыть",
+            game7Title: "Penalty Shoot",
+            game7Button: "Открыть",
+            telegramButton: "Перейти в телеграм"
+        },
+        hi: {
+            gamePickerTitle: "गेम पिकर",
+            detectButton: "डिवाइस का पता लगाएं",
+            startButton: "शुरू करें",
+            game1Title: "Mines",
+            game1Button: "खोलें",
+            game2Title: "Bombucks",
+            game2Button: "खोलें",
+            game3Title: "Brawl Pirates",
+            game3Button: "खोलें",
+            game4Title: "Royal Mines",
+            game4Button: "खोलें",
+            game7Title: "Penalty Shoot",
+            game7Button: "खोलें",
+            telegramButton: "टेलीग्राम पर जाएं"
+        },
+        br: {
+            gamePickerTitle: "SELETOR DE JOGOS",
+            detectButton: "Detectar dispositivo",
+            startButton: "Iniciar",
+            game1Title: "Mines",
+            game1Button: "Abrir",
+            game2Title: "Bombucks",
+            game2Button: "Abrir",
+            game3Title: "Brawl Pirates",
+            game3Button: "Abrir",
+            game4Title: "Royal Mines",
+            game4Button: "Abrir",
+            game7Title: "Penalty Shoot",
+            game7Button: "Abrir",
+            telegramButton: "Ir para o Telegram"
+        },
+        es: {
+            gamePickerTitle: "SELECCIONADOR DE JUEGOS",
+            detectButton: "Detectar dispositivo",
+            startButton: "Iniciar",
+            game1Title: "Mines",
+            game1Button: "Abrir",
+            game2Title: "Bombucks",
+            game2Button: "Abrir",
+            game3Title: "Brawl Pirates",
+            game3Button: "Abrir",
+            game4Title: "Royal Mines",
+            game4Button: "Abrir",
+            game7Title: "Penalty Shoot",
+            game7Button: "Abrir",
+            telegramButton: "Ir a Telegram"
+        },
+        uz: {
+            gamePickerTitle: "O'YIN TANLOVCHI",
+            detectButton: "Qurilmani aniqlash",
+            startButton: "Boshlash",
+            game1Title: "Mines",
+            game1Button: "Ochish",
+            game2Title: "Bombucks",
+            game2Button: "Ochish",
+            game3Title: "Brawl Pirates",
+            game3Button: "Ochish",
+            game4Title: "Royal Mines",
+            game4Button: "Ochish",
+            game7Title: "Penalty Shoot",
+            game7Button: "Ochish",
+            telegramButton: "Telegramga o'tish"
+        },
+        az: {
+            gamePickerTitle: "OYUN SEÇİCİ",
+            detectButton: "Cihazı aşkar et",
+            startButton: "Başla",
+            game1Title: "Mines",
+            game1Button: "Aç",
+            game2Title: "Bombucks",
+            game2Button: "Aç",
+            game3Title: "Brawl Pirates",
+            game3Button: "Aç",
+            game4Title: "Royal Mines",
+            game4Button: "Aç",
+            game7Title: "Penalty Shoot",
+            game7Button: "Aç",
+            telegramButton: "Teleqrama keç"
+        },
+        tr: {
+            gamePickerTitle: "OYUN SEÇİCİ",
+            detectButton: "Cihazı tespit et",
+            startButton: "Başlat",
+            game1Title: "Mines",
+            game1Button: "Aç",
+            game2Title: "Bombucks",
+            game2Button: "Aç",
+            game3Title: "Brawl Pirates",
+            game3Button: "Aç",
+            game4Title: "Royal Mines",
+            game4Button: "Aç",
+            game7Title: "Penalty Shoot",
+            game7Button: "Aç",
+            telegramButton: "Telegrame git"
+        },
+        pt: {
+            gamePickerTitle: "ESCOLHEDOR DE JOGOS",
+            detectButton: "Detectar dispositivo",
+            startButton: "Iniciar",
+            game1Title: "Mines",
+            game1Button: "Abrir",
+            game2Title: "Bombucks",
+            game2Button: "Abrir",
+            game3Title: "Brawl Pirates",
+            game3Button: "Abrir",
+            game4Title: "Royal Mines",
+            game4Button: "Abrir",
+            game7Title: "Penalty Shoot",
+            game7Button: "Abrir",
+            telegramButton: "Ir para o Telegram"
+        },
+        ar: {
+            gamePickerTitle: "مختار اللعبة",
+            detectButton: "اكتشاف الجهاز",
+            startButton: "ابدأ",
+            game1Title: "Mines",
+            game1Button: "افتح",
+            game2Title: "Bombucks",
+            game2Button: "افتح",
+            game3Title: "Brawl Pirates",
+            game3Button: "افتح",
+            game4Title: "Royal Mines",
+            game4Button: "افتح",
+            game7Title: "ركلة جزاء",
+            game7Button: "افتح",
+            telegramButton: "اذهب إلى تليجرام"
+        }
+    };
+
+    function changeLanguage(lang) {
+        document.getElementById('game-picker-title').innerText = translations[lang].gamePickerTitle;
+        document.getElementById('detect-button').innerText = translations[lang].detectButton;
+        document.getElementById('start-button').innerText = translations[lang].startButton;
+        document.getElementById('game1-title').innerText = translations[lang].game1Title;
+        document.getElementById('game1-button').innerText = translations[lang].game1Button;
+        document.getElementById('game2-title').innerText = translations[lang].game2Title;
+        document.getElementById('game2-button').innerText = translations[lang].game2Button;
+        document.getElementById('game3-title').innerText = translations[lang].game3Title;
+        document.getElementById('game3-button').innerText = translations[lang].game3Button;
+        document.getElementById('game4-title').innerText = translations[lang].game4Title;
+        document.getElementById('game4-button').innerText = translations[lang].game4Button;
+        document.getElementById('game7-title').innerText = translations[lang].game7Title;
+        document.getElementById('game7-button').innerText = translations[lang].game7Button;
+        document.getElementById('telegram-button').innerText = translations[lang].telegramButton;
+    }
+    function showSlides(n) {
             var i;
             var slides = document.getElementsByClassName("slide");
             var dots = document.getElementsByClassName("dot");
@@ -818,13 +1039,13 @@
             canvas.height = window.innerHeight;
         });
 
+
+
         init();
         animate();
         const typingText = document.querySelector('.typing-text');
         const phrases = [
-            "Подпишись на канал",
-            "Не упускай раздачи",
-            "Лови ваучеры!"
+
         ];
         let phraseIndex = 0;
         let letterIndex = 0;
@@ -925,7 +1146,7 @@
         }
          function startGame() {
             console.log(document.getElementById("device-output").textContent);
-            if (document.getElementById("device-output").textContent.trim() === "Устройство не определено") {
+            if (document.getElementById("device-output").textContent.trim() === "Device not detected") {
                 showModal();
             } else {
                 const now = new Date().getTime();
@@ -980,11 +1201,11 @@
                         font-size: 16px;
                         color: #666;
                         line-height: 1.5;
-                        margin-top: 10px;">Наша команда заботится о точности выданной вам игры, в режиме реального времени. В ближайшие 600 секунд, для вашего устройства с вероятностью ${probability}% будут работать сигналы на игру ${gameName}. Следующий запрос можно отправить через ${remainingTime} секунд.</p>
+                        margin-top: 10px;">Our team cares about the accuracy of the game provided to you in real time. In the next 600 seconds, your device will receive game signals for ${gameName} with a ${probability}% probability. You can send the next request in ${remainingTime} seconds.</p>
                     <p style="
                         font-size: 16px;
                         color: #666;
-                        margin-bottom: 20px;">С уважением, EntyLudik!</p>
+                        margin-bottom: 20px;">Best regards, MURDER1W!</p>
                     <button onclick="closeMiniModal()" style="
                         background: linear-gradient(to right, #2196F3, #21CBF3);
                         color: white;
@@ -1013,6 +1234,12 @@
                     return 'Royal Mines';
                 case '3':
                     return 'Brawl Pirates';
+                case '4':
+                    return 'Bombucks';
+                case '5':
+                    return 'LuckyJet';
+                case '6':
+                    return 'Aviator';
                 default:
                     return '';
             }
