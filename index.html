@@ -631,6 +631,34 @@
     transform: translateY(2px);
 }
 
+.language-selection {
+    display: flex;
+    flex-wrap: wrap; /* Иконки будут переноситься на новую строку, если не помещаются */
+    justify-content: center; /* Центрирование иконок */
+    gap: 10px; /* Расстояние между иконками */
+    padding: 20px;
+}
+
+.language-option {
+    width: 50px; /* Размер иконок */
+    height: 50px;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: transform 0.2s;
+}
+
+.language-option:hover {
+    transform: scale(1.1); /* Увеличение иконки при наведении */
+}
+
+@media (max-width: 600px) {
+    .language-option {
+        width: 40px; /* Уменьшаем размер иконок для мобильных устройств */
+        height: 40px;
+    }
+}
+
+
 
 
     </style>
@@ -645,6 +673,13 @@
     <img src="en.png" alt="English" class="language-option" onclick="changeLanguage('en')">
     <img src="ru.png" alt="Русский" class="language-option" onclick="changeLanguage('ru')">
     <img src="in.png" alt="हिंदी" class="language-option" onclick="changeLanguage('hi')">
+    <img src="br.png" alt="Português (Brasil)" class="language-option" onclick="changeLanguage('br')">
+    <img src="es.png" alt="Español" class="language-option" onclick="changeLanguage('es')">
+    <img src="uz.png" alt="O'zbek" class="language-option" onclick="changeLanguage('uz')">
+    <img src="az.png" alt="Azərbaycan dili" class="language-option" onclick="changeLanguage('az')">
+    <img src="tr.png" alt="Türkçe" class="language-option" onclick="changeLanguage('tr')">
+    <img src="pt.png" alt="Português" class="language-option" onclick="changeLanguage('pt')">
+    <img src="ar.png" alt="العربية" class="language-option" onclick="changeLanguage('ar')">
 </div>
 
 
@@ -759,7 +794,10 @@
             game4Button: "Open",
             game7Title: "Penalty Shoot",
             game7Button: "Open",
-            telegramButton: "Go to telegram"
+            telegramButton: "Go to telegram",
+            miniModalTitle: "Attention!",
+            miniModalContent: "Our team cares about the accuracy of the game provided to you in real time. In the next 600 seconds, your device will receive game signals for {gameName} with a {probability}% probability. You can send the next request in {remainingTime} seconds.",
+            miniModalButton: "Close",
         },
         ru: {
             gamePickerTitle: "ВЫБОР ИГР",
@@ -775,7 +813,11 @@
             game4Button: "Открыть",
             game7Title: "Penalty Shoot",
             game7Button: "Открыть",
-            telegramButton: "Перейти в телеграм"
+            telegramButton: "Перейти в телеграм",
+            miniModalTitle: "Внимание!",
+            miniModalContent: "Наша команда заботится о точности игры, предоставленной вам в режиме реального времени. В течение следующих 600 секунд ваше устройство будет получать игровые сигналы для {gameName} с вероятностью {probability}%. Вы можете отправить следующий запрос через {remainingTime} секунд.",
+            miniModalButton: "Закрыть"
+
         },
         hi: {
             gamePickerTitle: "गेम पिकर",
@@ -907,7 +949,11 @@
         }
     };
 
-    function changeLanguage(lang) {
+function changeLanguage(lang) {
+    console.log("Changing language to: ", lang);
+    console.log("Translations for this language: ", translations[lang]);
+
+    if (translations[lang]) {
         document.getElementById('game-picker-title').innerText = translations[lang].gamePickerTitle;
         document.getElementById('detect-button').innerText = translations[lang].detectButton;
         document.getElementById('start-button').innerText = translations[lang].startButton;
@@ -921,8 +967,25 @@
         document.getElementById('game4-button').innerText = translations[lang].game4Button;
         document.getElementById('game7-title').innerText = translations[lang].game7Title;
         document.getElementById('game7-button').innerText = translations[lang].game7Button;
+
+        // Обновляем текст для кнопки в Телеграм
         document.getElementById('telegram-button').innerText = translations[lang].telegramButton;
+
+        // Обновляем текст минимодала
+        document.querySelector('.modal-content-mini h2').innerText = translations[lang].miniModalTitle;
+        document.querySelector('.modal-content-mini p').innerText = translations[lang].miniModalContent
+            .replace('{gameName}', 'игры')  // Здесь можно заменить на конкретную игру
+            .replace('{probability}', '90')  // Можно заменить на реальные данные
+            .replace('{remainingTime}', '30');  // Заменить на оставшееся время
+
+        document.querySelector('.close-button-mini').innerText = translations[lang].miniModalButton;
+    } else {
+        console.error("Translations not found for language: ", lang);
     }
+}
+
+
+
     function showSlides(n) {
             var i;
             var slides = document.getElementsByClassName("slide");
@@ -1178,53 +1241,7 @@
             }
         }
 
-        function showMiniModal() {
-            const lastGameImage = localStorage.getItem('lastGameImage');
-            const gameName = getGameName(lastGameImage);
-            const probability = localStorage.getItem('lastProbability');
-            const remainingTime = 600 - Math.floor((new Date().getTime() - localStorage.getItem('lastGameTime')) / 1000);
 
-            const modalContent = `
-                <div style="
-                    background-color: #fff;
-                    border-radius: 10px;
-                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-                    padding: 20px;
-                    max-width: 290px;
-                    margin: 100px auto 0;
-                    text-align: center;
-                    font-family: 'Intro', Arial, sans-serif;">
-                    <h2 style="
-                        color: #333;
-                        font-size: 24px;">Внимание!</h2>
-                    <p style="
-                        font-size: 16px;
-                        color: #666;
-                        line-height: 1.5;
-                        margin-top: 10px;">Our team cares about the accuracy of the game provided to you in real time. In the next 600 seconds, your device will receive game signals for ${gameName} with a ${probability}% probability. You can send the next request in ${remainingTime} seconds.</p>
-                    <p style="
-                        font-size: 16px;
-                        color: #666;
-                        margin-bottom: 20px;">Best regards, MURDER1W!</p>
-                    <button onclick="closeMiniModal()" style="
-                        background: linear-gradient(to right, #2196F3, #21CBF3);
-                        color: white;
-                        padding: 10px 20px;
-                        border: none;
-                        border-radius: 5px;
-                        cursor: pointer;
-                        font-size: 16px;
-                        transition: all 0.3s ease-out;
-                        outline: none;
-                        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-                        font-family: 'Intro', Arial, sans-serif;">Закрыть</button>
-                </div>
-            `;
-
-            var miniModal = document.getElementById('miniModal');
-            miniModal.innerHTML = modalContent;
-            miniModal.style.display = 'block';
-        }
 
         function getGameName(imageNumber) {
             switch (imageNumber) {
