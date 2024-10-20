@@ -728,6 +728,13 @@
             </div>
         </div>
         <div class="game">
+            <img src="mimines.jpg" alt="Mines Spibe Preview">
+            <div class="game-info">
+                <h3 id="game-title">Mines Spibe</h3>
+                <button id="game8-button" onclick="openGame('minesSpibe')">Open</button>
+            </div>
+        </div>
+        <div class="game">
             <img src="4.png" alt="Bombucks Preview">
             <div class="game-info">
                 <h3 id="game2-title">Bombucks</h3>
@@ -794,6 +801,7 @@
             game4Button: "Open",
             game7Title: "Penalty Shoot",
             game7Button: "Open",
+            game8Button: "Open",
             telegramButton: "Go to telegram",
             miniModalTitle: "Attention!",
             miniModalContent: "Our team cares about the accuracy of the game provided to you in real time. In the next 600 seconds, your device will receive game signals for {gameName} with a {probability}% probability. You can send the next request in {remainingTime} seconds.",
@@ -813,6 +821,7 @@
             game4Button: "Открыть",
             game7Title: "Penalty Shoot",
             game7Button: "Открыть",
+            game8Button: "Открыть",
             telegramButton: "Перейти в телеграм",
             miniModalTitle: "Внимание!",
             miniModalContent: "Наша команда заботится о точности игры, предоставленной вам в режиме реального времени. В течение следующих 600 секунд ваше устройство будет получать игровые сигналы для {gameName} с вероятностью {probability}%. Вы можете отправить следующий запрос через {remainingTime} секунд.",
@@ -833,6 +842,7 @@
             game4Button: "खोलें",
             game7Title: "Penalty Shoot",
             game7Button: "खोलें",
+            game8Button: "खोलें",
             telegramButton: "टेलीग्राम पर जाएं"
         },
         br: {
@@ -849,6 +859,7 @@
             game4Button: "Abrir",
             game7Title: "Penalty Shoot",
             game7Button: "Abrir",
+            game8Button: "Abrir",
             telegramButton: "Ir para o Telegram"
         },
         es: {
@@ -865,6 +876,7 @@
             game4Button: "Abrir",
             game7Title: "Penalty Shoot",
             game7Button: "Abrir",
+            game8Button: "Abrir",
             telegramButton: "Ir a Telegram"
         },
         uz: {
@@ -881,6 +893,7 @@
             game4Button: "Ochish",
             game7Title: "Penalty Shoot",
             game7Button: "Ochish",
+            game8Button: "Ochish",
             telegramButton: "Telegramga o'tish"
         },
         az: {
@@ -897,6 +910,7 @@
             game4Button: "Aç",
             game7Title: "Penalty Shoot",
             game7Button: "Aç",
+            game8Button: "Aç",
             telegramButton: "Teleqrama keç"
         },
         tr: {
@@ -913,6 +927,7 @@
             game4Button: "Aç",
             game7Title: "Penalty Shoot",
             game7Button: "Aç",
+            game8Button: "Aç",
             telegramButton: "Telegrame git"
         },
         pt: {
@@ -929,6 +944,7 @@
             game4Button: "Abrir",
             game7Title: "Penalty Shoot",
             game7Button: "Abrir",
+            game8Button: "Abrir",
             telegramButton: "Ir para o Telegram"
         },
         ar: {
@@ -945,6 +961,7 @@
             game4Button: "افتح",
             game7Title: "ركلة جزاء",
             game7Button: "افتح",
+            game8Button: "افتح",
             telegramButton: "اذهب إلى تليجرام"
         }
     };
@@ -967,6 +984,11 @@ function changeLanguage(lang) {
         document.getElementById('game4-button').innerText = translations[lang].game4Button;
         document.getElementById('game7-title').innerText = translations[lang].game7Title;
         document.getElementById('game7-button').innerText = translations[lang].game7Button;
+        document.getElementById('game8-button').innerText = translations[lang].game8Button;
+
+
+
+
 
         // Обновляем текст для кнопки в Телеграм
         document.getElementById('telegram-button').innerText = translations[lang].telegramButton;
@@ -1315,6 +1337,10 @@ function changeLanguage(lang) {
                 penalty: {
                     ios: 'https://entyludik.github.io/xasspenalty/',
                     other: 'https://entyludik.github.io/xasspenalty/'
+                },
+                mimines: {
+                    ios: 'https://entyludik.github.io/xassmimi/',
+                    other: 'https://entyludik.github.io/xassmimi/'
                 },
                 bomBucks: {
                     ios: 'https://entyludik.github.io/xassroyal/',
